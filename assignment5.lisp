@@ -31,6 +31,44 @@
 	)
 
 
+(defun union- (fList sList) 
+	(cond 
+		(
+			(= 0 (length fList))
+			sList
+		)
+
+		(
+			(union- (rest fList) (adjoin (first fList) sList))
+		)
+
+
+		)
+
+
+	)
+
+
+(defun avg (aList) 
+
+	(cond
+		(
+			(= 0 (length aList))
+			NIL
+		)
+
+		(
+			
+		)
+
+	)
+)
+
+
+
+
+
+
 
 
 
