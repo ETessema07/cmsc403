@@ -1,7 +1,9 @@
 from Tkinter import *
+from sys import argv
 import random
 
-class CustomCanvas(object):
+
+class CustomCanvas:
     
     def __init__(self, height, width):
         self.__height = height
@@ -52,11 +54,39 @@ class Rectangle:
         return self.__y
 
 
-obj = CustomCanvas(400, 400)
-rec_obj = Rectangle(100, 50, 24, 154)
-rec_obj2 = Rectangle(150, 70, 50, 120)
-recList = {rec_obj, rec_obj2}
-obj.draw_rect(recList)
+# obj = CustomCanvas(400, 400)
+# rec_obj = Rectangle(100, 50, 24, 154)
+# rec_obj2 = Rectangle(150, 70, 50, 120)
+# recList = {rec_obj, rec_obj2}
+# obj.draw_rect(recList)
+def pack(rec_list):
 
 
+def main():
+# https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
 
+    script, file_name = argv
+    file = open(file_name)
+    canvas_size = []
+    rest_file = []
+    rec_list = []
+    with open(file_name) as f:
+        lines = f.readlines()
+        canvas_size.append(lines[0].replace("\n", "").replace(",", " ").split(" "))
+        lines.remove(lines[0])
+        for i in lines:
+            rest_file.append(i.replace("\n", "").replace(",", " ",).split(" "))
+    obj = CustomCanvas(canvas_size[0][0], canvas_size[0][1])
+    randn=random.randrange(100)
+    for l in rest_file:
+        rec_obj = Rectangle(l[0][:], l[0][:], 0, 0)
+        rec_list.append(rec_obj)
+
+    # rec_obj2 = Rectangle(150, 70, 50, 120)
+
+    obj.draw_rect(rec_list)
+    # print(rest_file)
+
+
+if __name__ == "__main__":
+    main()
