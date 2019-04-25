@@ -1,6 +1,7 @@
-from Tkinter import *
+from tkinter import *
 from sys import argv
 import random
+import rpack
 
 
 class CustomCanvas:
@@ -60,7 +61,8 @@ class Rectangle:
 # recList = {rec_obj, rec_obj2}
 # obj.draw_rect(recList)
 def pack(rec_list):
-
+    positions = rpack.pack(rec_list)
+    return positions
 
 def main():
 # https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
@@ -70,6 +72,7 @@ def main():
     canvas_size = []
     rest_file = []
     rec_list = []
+    tup_list = []
     with open(file_name) as f:
         lines = f.readlines()
         canvas_size.append(lines[0].replace("\n", "").replace(",", " ").split(" "))
@@ -77,15 +80,19 @@ def main():
         for i in lines:
             rest_file.append(i.replace("\n", "").replace(",", " ",).split(" "))
     obj = CustomCanvas(canvas_size[0][0], canvas_size[0][1])
-    randn=random.randrange(100)
+    # for l in rest_file:
+    #     rec_obj = Rectangle(l[0][:], l[0][:], 0, 0)
+    #     rec_list.append(rec_obj)
+
+
+    # obj.draw_rect(rec_list)
     for l in rest_file:
-        rec_obj = Rectangle(l[0][:], l[0][:], 0, 0)
-        rec_list.append(rec_obj)
+        tup_list.append(tuple(list(map(int, l))))
 
-    # rec_obj2 = Rectangle(150, 70, 50, 120)
+    print(pack(tup_list))
 
-    obj.draw_rect(rec_list)
-    # print(rest_file)
+
+    # print(pack(rec_list))
 
 
 if __name__ == "__main__":
