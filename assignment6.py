@@ -10,89 +10,74 @@ class CustomCanvas:
         self.__height = height
         self.__width = width
         self.master = Tk()
-        self.w = Canvas(self.master, width= int(300), height= int(400), bg="white")
+        self.w = Canvas(self.master, height= int(height), width= int(width))
         self.w.pack()
 
     def draw_rect(self, rect_list):
         for i in rect_list:
-            self.w.create_rectangle(i.get_height(), i.get_width(), i.getx(), i.gety(), outline="red")
+            self.w.create_rectangle(i.getx(), i.gety(), i.getx()+i.get_width(), i.gety()+i.get_height(), outline="black", fill="#00ffff")
 
         self.master.mainloop()
 
-                               
-    def getHeight(self):
-        return self.__height
-                               
-    def getWidth(self):
-        return self.__width
-                               
-    def toString(self):
-        return ("the canvas has a height of: {} and a width of: {}".format(self.__height,self.__width) )
 
 
-class Rectangle:
-    __height = 0
-    __width = 0
-    __x = 0
-    __y = 0
+
+class Rectangle(object):
 
     def __init__(self, height, width, x, y):
-        self.__height = height
-        self.__width = width
-        self.__x = x
-        self.__y = y
+        self.height = int(height)
+        self.width = int(width)
+        self.x = int(x)
+        self.y = int(y)
 
     def get_height(self):
-        return self.__height
+        return self.height
 
     def get_width(self):
-        return self.__width
+        return self.width
 
     def getx(self):
-        return self.__x
+        return self.x
 
     def gety(self):
-        return self.__y
+        return self.y
 
 
-# obj = CustomCanvas(400, 400)
-# rec_obj = Rectangle(100, 50, 24, 154)
-# rec_obj2 = Rectangle(150, 70, 50, 120)
-# recList = {rec_obj, rec_obj2}
-# obj.draw_rect(recList)
+
 def pack(rec_list):
     positions = rpack.pack(rec_list)
+
     return positions
 
 def main():
 # https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
 
     script, file_name = argv
-    file = open(file_name)
     canvas_size = []
     rest_file = []
     rec_list = []
     tup_list = []
+
     with open(file_name) as f:
         lines = f.readlines()
         canvas_size.append(lines[0].replace("\n", "").replace(",", " ").split(" "))
         lines.remove(lines[0])
         for i in lines:
             rest_file.append(i.replace("\n", "").replace(",", " ",).split(" "))
-    obj = CustomCanvas(canvas_size[0][0], canvas_size[0][1])
-    # for l in rest_file:
-    #     rec_obj = Rectangle(l[0][:], l[0][:], 0, 0)
-    #     rec_list.append(rec_obj)
-
-
-    # obj.draw_rect(rec_list)
     for l in rest_file:
-        tup_list.append(tuple(list(map(int, l))))
+        tup_list.append(list(map(int, l)))
 
-    print(pack(tup_list))
+    if len(tup_list) <=16:
+        tup_list.sort(key=lambda tuple: tuple[0], reverse=True) 
+    else:
+        tup_list.sort(key=lambda tuple: tuple[0])
+    coord_list=pack(tup_list)
 
+    for k in range(len(tup_list)):
+        rec_list.append(Rectangle(tup_list[k][0], tup_list[k][1], coord_list[k][0], coord_list[k][1]))
 
-    # print(pack(rec_list))
+    obj = CustomCanvas(canvas_size[0][0], canvas_size[0][1])
+    obj.draw_rect(rec_list)
 
 
 if __name__ == "__main__":
