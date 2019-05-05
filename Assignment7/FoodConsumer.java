@@ -18,12 +18,12 @@ public class FoodConsumer extends Thread{
         while (true) {
             lock.lock();
             try{
-            int dif = this.bank.getFood() - random;
+            int dif = this.bank.food - random;
             if (dif >= 0) {
                 this.bank.takeFood(random);
-                System.out.println("I've taken " + random + " amount of food!, total food amount is: " + (this.bank.getFood()));
+                System.out.println("I've taken " + random + " amount of food!, total food amount is: " + (this.bank.food));
             } else {
-                System.out.println("waiting to get more food!");
+                System.out.println("waiting to get more food, consumer tried taking: "+ random + " from food bank but we only have:"+this.bank.food);
             }
 
             try {
