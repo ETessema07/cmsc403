@@ -1,5 +1,10 @@
 public class FoodBank {
-    private int food;
+
+    public int getFood() {
+        return food;
+    }
+
+    int food;
 
     public FoodBank() {
         this.food = 0;
@@ -11,4 +16,5 @@ public class FoodBank {
     public void takeFood(int amount){
         food-=amount;
     }
+
 }
