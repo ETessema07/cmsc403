@@ -6,34 +6,94 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
-public class RaceTrack extends JPanel implements Runnable{
+public class RaceTrack extends JPanel{
     static BufferedImage car;
     static JPanel p;
     static JButton start;
     static JButton pause;
     static JButton reset;
     static JFrame f;
-    static int d = 20;
-    static Thread t;
+    static int car1 = 20;
+    static int car2 = 20;
+    static int car3 = 20;
+    static Thread racer1;
+    static Thread racer2;
+    static Thread racer3;
+    static boolean go=true;
+    static Random rand;
+
     public RaceTrack(){
         p = new JPanel();
         p.setLayout(new FlowLayout());
         start=new JButton("Start");
         pause=new JButton("Pause");
         reset=new JButton("Reset");
+        buttons();
+        p.add(start);
+        p.add(pause);
+        p.add(reset);
+    }
+
+    public static void buttons(){
+        rand = new Random();
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Im starting");
-                d+=30;
+                go =true;
+                racer1 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        rand = new Random();
+                        int random = rand.nextInt(11);
+                        while(go){
+                            try {
+                                car1+=random;
+                                Thread.sleep(1000);
+                            }catch (InterruptedException l){}
+                        }
+                    }
+                });
+                racer1.start();
+
+                racer2 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        rand = new Random();
+                        int random = rand.nextInt(11);
+                        while(go){
+                            try {
+                                car2+=random;
+                                Thread.sleep(1000);
+                            }catch (InterruptedException l){}
+                        }
+                    }
+                });
+                racer2.start();
+
+                racer3 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        rand = new Random();
+                        int random = rand.nextInt(11);
+                        while(go){
+                            try {
+                                car3+=random;
+                                Thread.sleep(1000);
+                            }catch (InterruptedException l){}
+                        }
+                    }
+                });
+                racer3.start();
+
             }
         });
         pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Im pausing");
-                d=d;
+                go = false;
             }
         });
 
@@ -41,15 +101,12 @@ public class RaceTrack extends JPanel implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Im resetting");
-                d=20;
+                car1=20;
+                car2=20;
+                car3=20;
+                go = false;
             }
         });
-
-
-
-        p.add(start);
-        p.add(pause);
-        p.add(reset);
     }
 
 
@@ -68,6 +125,7 @@ public class RaceTrack extends JPanel implements Runnable{
         f.setLocationRelativeTo(null);
         f.repaint();
         f.setVisible(true);
+
 
     }
     @Override
@@ -88,15 +146,28 @@ public class RaceTrack extends JPanel implements Runnable{
         g.fillRect(53,50,400,10);
         g.fillRect(53,100,400,10);
         g.fillRect(53,150,400,10);
-        g.drawImage(car, d, 39, this);
-        g.drawImage(car,20,89, this);
-        g.drawImage(car,20,139, this);
+        g.drawImage(car, car1, 39, this);
+        g.drawImage(car,car2,89, this);
+        g.drawImage(car,car3,139, this);
         repaint();
     }
 
 
-    @Override
-    public void run() {
-
-    }
+//    @Override
+//    public synchronized void run() {
+//        start.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                    System.out.println("Im starting");
+//                    d += 10;
+//                    try {
+//                        Thread.sleep(3000);
+//                    } catch (InterruptedException a) {
+//
+//                    }
+//
+//            }
+//        });
+//    }
 }
