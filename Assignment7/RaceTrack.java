@@ -29,14 +29,14 @@ public class RaceTrack extends JPanel {
         pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Im starting");
+                System.out.println("Im pausing");
             }
         });
 
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Im starting");
+                System.out.println("Im resetting");
             }
         });
 
