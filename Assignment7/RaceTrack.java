@@ -46,12 +46,14 @@ public class RaceTrack extends JPanel{
                     @Override
                     public void run() {
                         rand = new Random();
-                        int random = rand.nextInt(11);
                         while(go){
                             try {
+                                int random = rand.nextInt(11)+1;
                                 car1+=random;
                                 Thread.sleep(1000);
-                            }catch (InterruptedException l){}
+                            }catch (InterruptedException l){
+                                return;
+                            }
                         }
                     }
                 });
@@ -61,12 +63,14 @@ public class RaceTrack extends JPanel{
                     @Override
                     public void run() {
                         rand = new Random();
-                        int random = rand.nextInt(11);
                         while(go){
                             try {
+                                int random = rand.nextInt(11)+1;
                                 car2+=random;
                                 Thread.sleep(1000);
-                            }catch (InterruptedException l){}
+                            }catch (InterruptedException l){
+                                return;
+                            }
                         }
                     }
                 });
@@ -76,12 +80,14 @@ public class RaceTrack extends JPanel{
                     @Override
                     public void run() {
                         rand = new Random();
-                        int random = rand.nextInt(11);
                         while(go){
                             try {
+                                int random = rand.nextInt(11)+1;
                                 car3+=random;
                                 Thread.sleep(1000);
-                            }catch (InterruptedException l){}
+                            }catch (InterruptedException l){
+                                return;
+                            }
                         }
                     }
                 });
