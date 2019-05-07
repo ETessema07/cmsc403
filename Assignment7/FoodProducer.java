@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 public class FoodProducer extends Thread{
     private FoodBank bank;
-    ReentrantLock lock = new ReentrantLock();
+    ReentrantLock threadLock = new ReentrantLock();
 
 
     public  FoodProducer(FoodBank bank) {
@@ -10,21 +10,21 @@ public class FoodProducer extends Thread{
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         while(true){
-            lock.lock();
+            threadLock.lock();
             try {
                 Random rand = new Random();
                 int random = rand.nextInt(100)+1;
                 this.bank.giveFood(random);
-                System.out.println("I've added "+random+ " amount of food!, total food amount is:"+this.bank.getFood());
+                System.out.println("I've added "+random+ " amount of food, total food amount is: "+this.bank.food);
                 try {
                     Thread.sleep(100);
                 }catch (InterruptedException e){
-                    continue;
+
                 }
             }finally {
-                lock.unlock();
+                threadLock.unlock();
             }
 
 

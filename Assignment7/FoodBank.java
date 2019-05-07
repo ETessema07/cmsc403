@@ -1,9 +1,4 @@
 public class FoodBank {
-
-    public int getFood() {
-        return food;
-    }
-
     int food;
 
     public FoodBank() {

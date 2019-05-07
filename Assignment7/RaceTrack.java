@@ -42,69 +42,69 @@ public class RaceTrack extends JPanel{
         rand = new Random();
 
         start.addActionListener(new ActionListener() {
-            
             @Override
             public void actionPerformed(ActionEvent e) {
-                go =true;
-                endRace=false;
-                racer1 = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        rand = new Random();
-                        while(go){
-                            try {
-                                int random = rand.nextInt(11);
-                                car1+=random;
-                                haveWinner();
-                                if(!endRace) {
-                                    repaint();
+                if (!endRace){
+                        racer1 = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                rand = new Random();
+                                go = true;
+                                while (go) {
+                                    try {
+                                        int random = rand.nextInt(11);
+                                        car1 += random;
+                                        haveWinner();
+                                        if (!endRace) {
+                                            repaint();
+                                        }
+                                        Thread.sleep(50);
+                                    } catch (InterruptedException l) {
+
+                                    }
                                 }
-                                Thread.sleep(50);
-                            }catch (InterruptedException l){
+                            }
+                        });
+                    racer1.start();
 
+                    racer2 = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            rand = new Random();
+                            while (go) {
+                                try {
+                                    int random = rand.nextInt(11);
+                                    car2 += random;
+                                    Thread.sleep(50);
+                                } catch (InterruptedException l) {
+
+                                }
                             }
                         }
-                    }
-                });
-                racer1.start();
+                    });
+                    racer2.start();
 
-                racer2 = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        rand = new Random();
-                        while(go){
-                            try {
-                                int random = rand.nextInt(11);
-                                car2+=random;
-                                Thread.sleep(50);
-                            }catch (InterruptedException l){
+                    racer3 = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            rand = new Random();
+                            while (go) {
+                                try {
+                                    int random = rand.nextInt(11);
+                                    car3 += random;
+                                    Thread.sleep(50);
+                                } catch (InterruptedException l) {
 
+                                }
                             }
                         }
-                    }
-                });
-                racer2.start();
-
-                racer3 = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        rand = new Random();
-                        while(go){
-                            try {
-                                int random = rand.nextInt(11);
-                                car3+=random;
-                                Thread.sleep(50);
-                            }catch (InterruptedException l){
-
-                            }
-                        }
-                    }
-                });
-                racer3.start();
+                    });
+                    racer3.start();
 
 
-
+                }
             }
+
         });
         pause.addActionListener(new ActionListener() {
             @Override
@@ -121,6 +121,7 @@ public class RaceTrack extends JPanel{
                 car2=20;
                 car3=20;
                 go = false;
+                endRace=false;
                 repaint();
 
             }
@@ -147,28 +148,22 @@ public class RaceTrack extends JPanel{
     }
 
      public synchronized void haveWinner(){
-        if (car1 >= 420 || car2 >= 420 || car3 >= 420) {
-            if (car1 >= 420 && car1> car2 && car1>car3) {
+        if (car1 >= 425 || car2 >= 425 || car3 >= 425) {
+            if (car1 >= 425 && car1> car2 && car1>car3) {
                 winner = "car1";
                 System.out.println(winner+"has won");
             }
-            else if (car2 >= 420 && car2> car1 && car2>car3) {
+            else if (car2 >= 425 && car2> car1 && car2>car3) {
                 winner = "car2";
                 System.out.println(winner+"has won");
             }
-            else if(car3 >= 420 && car3> car2 && car3>car1) {
+            else if(car3 >= 425 && car3> car2 && car3>car1) {
                 winner = "car3";
                 System.out.println(winner+"has won");
             }
             JOptionPane.showMessageDialog(null,"the winner is:  "+ winner);
             go=false;
             endRace=true;
-//            car1 = 20;
-//            car2 = 20;
-//            car3 = 20;
-//            repaint();
-
-
         }
     }
 

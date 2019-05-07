@@ -3,7 +3,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class FoodConsumer extends Thread{
     FoodBank bank;
-    ReentrantLock lock = new ReentrantLock();
+    ReentrantLock threadLock = new ReentrantLock();
 
     public FoodConsumer(FoodBank bank) {
         this.bank = bank;
@@ -11,19 +11,19 @@ public class FoodConsumer extends Thread{
 
     @Override
     public synchronized void run() {
-        Random rand = new Random();
-        boolean cond = true;
-        int random = rand.nextInt(100) + 1;
+
 
         while (true) {
-            lock.lock();
+            threadLock.lock();
             try{
-            int dif = this.bank.food - random;
-            if (dif >= 0) {
+            Random rand = new Random();
+            int random = rand.nextInt(100) + 1;
+            int difference = this.bank.food - random;
+            if (difference >= 0) {
                 this.bank.takeFood(random);
-                System.out.println("I've taken " + random + " amount of food!, total food amount is: " + (this.bank.food));
+                System.out.println("I've taken " + random + " amount of food, total food amount is: " + (this.bank.food));
             } else {
-                System.out.println("waiting to get more food, consumer tried taking: "+ random + " from food bank but we only have:"+this.bank.food);
+                System.out.println("waiting to get more food, consumer tried taking: "+ random + " from food bank but we only have: "+this.bank.food);
             }
 
             try {
@@ -32,7 +32,7 @@ public class FoodConsumer extends Thread{
 
             }
         }finally {
-                lock.unlock();
+                threadLock.unlock();
             }
 
         }
