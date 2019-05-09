@@ -12,18 +12,21 @@ public class FoodProducer extends Thread{
     @Override
     public synchronized void run() {
         while(true){
-            threadLock.lock();
+
             try {
                 Random rand = new Random();
                 int random = rand.nextInt(100)+1;
+                threadLock.lock();
                 this.bank.giveFood(random);
                 System.out.println("I've added "+random+ " amount of food, total food amount is: "+this.bank.food);
                 try {
                     Thread.sleep(100);
-                }catch (InterruptedException e){
 
+                }catch (InterruptedException e){
+                    continue;
                 }
             }finally {
+
                 threadLock.unlock();
             }
 
